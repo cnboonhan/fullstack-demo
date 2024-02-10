@@ -14,8 +14,8 @@ sudo apt install ansible
 ##### SSH Access
 
 ```
-# localhost should be able to run the following without error or password prompts for each host in inventory
-ssh -o StrictHostKeyChecking=no user@ip
+# localhost should be able to run the following without error 
+ansible all -m ping -i inventory.ini
 ```
 
 ### Configuration
