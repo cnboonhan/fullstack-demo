@@ -45,7 +45,14 @@ tofu apply -parallelism=1   # Handle race condition in tofu apply during ssh key
 ### Configuration
 
 ```
+# Gitlab and Docker
 cd configuration
 ansible all -m ping -i inventory.ini
+ansible-playbook docker-playbook.yml  -i inventory.ini
 ansible-playbook gitlab-playbook.yml  -i inventory.ini
+```
+
+```
+# Kubernetes
+cd configuration
 ```

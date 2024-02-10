@@ -69,8 +69,8 @@ module "gitlab-cluster" {
       name = "gitlab-master"
       limits = {
         cpu    = 2
-        memory = "4GiB"
-        disk   = "20GiB"
+        memory = "6GiB"
+        disk   = "50GiB"
       }
     }
   ]
