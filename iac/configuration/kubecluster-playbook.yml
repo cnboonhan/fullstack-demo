@@ -1,0 +1,30 @@
+---
+- name: Install Kubernetes Cluster
+  hosts: localhost
+
+  tasks:
+    - name: Install k3s on App Cluster Master
+      command: ssh {{ groups['app'][0] }} -- "curl -sfL https://get.k3s.io | sh -"
+
+    - name: Copy k3s config to local machine
+      command: scp {{ groups['app'][0] }}:/etc/rancher/k3s/k3s.yaml ~/.kube/config
+
+    - name: Fix IP Address of kubeconfig
+      replace:
+        path: ~/.kube/config
+        regexp: "server: https://127.0.0.1:6443"
+        replace: "server: https://{{ groups['app'][0] }}:6443"
+
+    - name: Test that kubectl works
+      command: kubectl version
+
+    - name: Get the K3S_TOKEN
+      command: ssh {{ groups['app'][0] }} -- "cat /var/lib/rancher/k3s/server/node-token"
+      register: k3s_token
+      tags: "do"
+
+    - name: Install k3s on App Cluster Workers
+      command: ssh -o StrictHostKeyChecking=no {{ item }} -- "curl -sfL https://get.k3s.io | K3S_URL=https://{{ groups['app'][0] }}:6443 K3S_TOKEN={{ k3s_token['stdout'] }} sh -"
+      loop: "{{ groups['app'][1:] }}"
+      register: result
+      tags: "do"
