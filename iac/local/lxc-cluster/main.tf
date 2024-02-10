@@ -65,6 +65,7 @@ resource "lxd_instance" "xs_instances" {
   image = var.xs_image
   type = "virtual-machine"
   running = true
+  wait_for_network = true
   profiles = [
     each.value.profile
   ]
