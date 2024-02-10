@@ -4,40 +4,29 @@
   remote_user: root
 
   tasks:
-    - name: Update APT package cache
-      apt:
-        update_cache: yes
-      tags:
-        - package-install
+    - name: Ensure /opt/gitlab exists
+      file:
+        path: /opt/gitlab
+        state: directory
+        mode: "0755"
 
-    - name: Install Gitlab Pre-Requisites
-      apt:
-        name:
-          - curl
-          - openssh-server
-          - ca-certificates
-          - tzdata
-          - perl
-          - postfix
-        state: present
-        update_cache: yes
-      tags:
-        - package-install
+    - name: Copy Docker Compose file
+      copy:
+        src: gitlab.docker-compose.yml
+        dest: /opt/gitlab/docker-compose.yml
 
-    - name: Install GitLab Repository
-      shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash
-      tags:
-        - gitlab-install
+    - name: Start Docker Compose
+      shell: docker-compose -f /opt/gitlab/docker-compose.yml up -d
 
-    - name: Install GitLab
-      shell: apt install gitlab-ce
+    - name: Wait for URL to respond with status 200
+      uri:
+        url: https://192.168.43.11/users/sign_in
+        method: GET
+        status_code: 200
+        validate_certs: no
+      register: response
+      until: response.status == 200
+      retries: 100
+      delay: 5
       tags:
-        - gitlab-install
-
-    - name: Configure and Run GitLab
-      shell: gitlab-ctl reconfigure
-      environment:
-        EXTERNAL_URL: "http://gitlab.example.com" # TODO: Replace with your domain
-        LETSENCRYPT: false
-      tags:
-        - gitlab-run
+        - liveliness-check

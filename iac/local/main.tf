@@ -70,6 +70,7 @@ module "gitlab-cluster" {
       limits = {
         cpu    = 2
         memory = "4GiB"
+        disk   = "20GiB"
       }
     }
   ]
