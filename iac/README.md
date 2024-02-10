@@ -56,5 +56,4 @@ ansible-playbook gitlab-playbook.yml  -i inventory.ini
 # Kubernetes
 cd configuration
 ansible-playbook kubecluster-playbook.yml -i inventory.ini
-
 ```
