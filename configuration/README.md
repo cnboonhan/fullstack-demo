@@ -16,6 +16,9 @@ sudo apt install ansible
 ```
 # localhost should be able to run the following without error 
 ansible all -m ping -i inventory.ini
+
+# Every account should be also able to run commands without sudo prompts. In /etc/sudoers :
+user ALL=(ALL) NOPASSWD: ALL 
 ```
 
 ### Configuration
