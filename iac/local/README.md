@@ -1,20 +1,20 @@
-# Infrastructure Setup
+# Infrastructure Setup Guide
 
 ## Prerequisites
 
-###### LXD ( Local )
+##### LXD ( Local )
 
 ```
 sudo snap install lxd
 ```
 
-###### OpenTofu
+##### OpenTofu
 
 ```
 snap install --classic opentofu
 ```
 
-###### Ansible
+##### Ansible
 
 ```
 sudo apt update
@@ -23,11 +23,11 @@ sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible
 ```
 
-## Setup
+## Provisioning and Configuration
 
-### Infrastructure Provisioning
+### Provisioning
 
-###### Local Setup
+##### Local
 
 ```
 cd local
@@ -38,7 +38,7 @@ tofu init
 tofu apply 
 ```
 
-###### Cloud Setup
+##### Cloud
 
 (In progress...)
 
