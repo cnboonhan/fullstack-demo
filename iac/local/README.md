@@ -47,4 +47,5 @@ tofu apply
 ```
 cd configuration
 ansible all -m ping -i inventory.ini
+ansible-playbook gitlab-playbook.yml  -i inventory.ini
 ```

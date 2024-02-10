@@ -63,6 +63,8 @@ resource "lxd_instance" "xs_instances" {
 
   name  = "${var.xs_label}-${each.key}"
   image = var.xs_image
+  type = "virtual-machine"
+  running = true
   profiles = [
     each.value.profile
   ]
@@ -75,10 +77,20 @@ resource "lxd_instance" "xs_instances" {
       "ipv4.address" = "${each.value.ip}"
     }
   }
+}
 
-  file {
-    source_path = try(var.xs_ssh_authorized_pubkey_path, "")
-    target_path = "/root/.ssh/authorized_keys"
-    create_directories = true
+# SSH Key
+resource "lxd_instance_file" "xs_instances" {
+  depends_on = [
+    lxd_instance.xs_instances
+  ]
+
+  for_each = {
+    for index, container in var.xs_instances :
+    container.name => container
   }
+
+  instance  = "${var.xs_label}-${each.key}"
+  source_path = try(var.xs_ssh_authorized_pubkey_path, "")
+  target_path = "/root/.ssh/authorized_keys"
 }

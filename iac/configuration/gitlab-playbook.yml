@@ -25,14 +25,19 @@
         - package-install
 
     - name: Install GitLab Repository
-      shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | bash
+      shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash
       tags:
         - gitlab-install
 
     - name: Install GitLab
       shell: apt install gitlab-ce
-      environment:
-        EXTERNAL_URL: "https://gitlab.example.com" # TODO: Replace with your domain
-        LETSENCRYPT: false
       tags:
         - gitlab-install
+
+    - name: Configure and Run GitLab
+      shell: gitlab-ctl reconfigure
+      environment:
+        EXTERNAL_URL: "http://gitlab.example.com" # TODO: Replace with your domain
+        LETSENCRYPT: false
+      tags:
+        - gitlab-run
