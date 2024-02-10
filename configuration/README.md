@@ -11,6 +11,13 @@ sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt install ansible
 ```
 
+##### SSH Access
+
+```
+# localhost should be able to run the following without error or password prompts for each host in inventory
+ssh -o StrictHostKeyChecking=no user@ip
+```
+
 ### Configuration
 
 ```
