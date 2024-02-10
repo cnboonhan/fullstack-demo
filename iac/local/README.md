@@ -55,4 +55,16 @@ ansible-playbook gitlab-playbook.yml  -i inventory.ini
 ```
 # Kubernetes
 cd configuration
+
+# On Master
+curl -sfL https://get.k3s.io | sh -
+K3S_TOKEN=$(cat /var/lib/rancher/k3s/server/token)
+
+# On Workers
+curl -sfL https://get.k3s.io | K3S_URL=https://[Server Ip]:6443 K3S_TOKEN=XXX sh -
+
+# On Admin
+lxc file pull app-cluster-master-01/etc/rancher/k3s/k3s.yaml /tmp/k3s.yaml
+KUBECONFIG=/tmp/k3s.yaml kubectl get pods -A
+
 ```
