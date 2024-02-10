@@ -1,0 +1,38 @@
+---
+- name: Install GitLab
+  hosts: gitlab
+  remote_user: root
+
+  tasks:
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+      tags:
+        - package-install
+
+    - name: Install Gitlab Pre-Requisites
+      apt:
+        name:
+          - curl
+          - openssh-server
+          - ca-certificates
+          - tzdata
+          - perl
+          - postfix
+        state: present
+        update_cache: yes
+      tags:
+        - package-install
+
+    - name: Install GitLab Repository
+      shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | bash
+      tags:
+        - gitlab-install
+
+    - name: Install GitLab
+      shell: apt install gitlab-ce
+      environment:
+        EXTERNAL_URL: "https://gitlab.example.com" # TODO: Replace with your domain
+        LETSENCRYPT: false
+      tags:
+        - gitlab-install

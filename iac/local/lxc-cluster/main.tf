@@ -15,8 +15,7 @@ resource "lxd_network" "xs_network" {
 
   config = {
     "ipv4.address" = var.xs_network.ipv4.address
-    "ipv4.nat"     = "true"
-    "ipv6.address" = "none"
+    "ipv4.nat"     = true
   }
 }
 
@@ -80,5 +79,6 @@ resource "lxd_instance" "xs_instances" {
   file {
     source_path = try(var.xs_ssh_authorized_pubkey_path, "")
     target_path = "/root/.ssh/authorized_keys"
+    create_directories = true
   }
 }
