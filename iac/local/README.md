@@ -25,4 +25,8 @@ ssh-keygen # ~/.ssh/id_rsa.pub to be copied into LXC containers for ssh access
 
 tofu init
 tofu apply -parallelism=1   # Handle race condition in tofu apply during ssh key copy
+
+# Note that if you have Docker on your machine, there might networking issues
+# Set the following in /etc/docker/daemon.json
+{ "iptables": false }
 ```
