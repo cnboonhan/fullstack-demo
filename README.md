@@ -20,6 +20,10 @@ Demo of a fullstack application made from scratch, for exploration and learning.
 
 ## Set Up
 
-### Base Infrastructure
+### Infrastructure
 
-[Local Setup](iac/local/README.md)
+[Local Infrastructure Setup](iac/local/README.md)
+
+#### Configuration
+
+[Configuration Setup](configuration/README.md)
