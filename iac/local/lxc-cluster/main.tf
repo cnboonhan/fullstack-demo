@@ -51,14 +51,14 @@ resource "lxd_profile" "xs_profiles" {
 }
 
 # Containers
-resource "lxd_container" "xs_containers" {
+resource "lxd_instance" "xs_instances" {
   depends_on = [
     lxd_network.xs_network,
     lxd_profile.xs_profiles
   ]
 
   for_each = {
-    for index, container in var.xs_containers :
+    for index, container in var.xs_instances :
     container.name => container
   }
 
@@ -75,5 +75,10 @@ resource "lxd_container" "xs_containers" {
       network        = lxd_network.xs_network.name
       "ipv4.address" = "${each.value.ip}"
     }
+  }
+
+  file {
+    source_path = try(var.xs_ssh_authorized_pubkey_path, "")
+    target_path = "/root/.ssh/authorized_keys"
   }
 }

@@ -27,7 +27,7 @@ module "kubernetes-cluster" {
     }
   ]
 
-  xs_containers = [
+  xs_instances = [
     {
       name    = "master-01"
       profile = "kubernetes-master"
@@ -74,7 +74,7 @@ module "gitlab-cluster" {
     }
   ]
 
-  xs_containers = [
+  xs_instances = [
     {
       name    = "master-01"
       profile = "gitlab-master"

@@ -25,10 +25,15 @@ variable "xs_profiles" {
   }))
 }
 
-variable "xs_containers" {
+variable "xs_instances" {
   type = list(object({
     name    = string
     profile = string
     ip      = string
   }))
+}
+
+variable "xs_ssh_authorized_pubkey_path" {
+  type = string
+  default = "~/.ssh/id_rsa.pub"
 }
