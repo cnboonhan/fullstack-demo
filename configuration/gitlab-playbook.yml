@@ -20,13 +20,13 @@
 
     - name: Wait for URL to respond with status 200
       uri:
-        url: https://192.168.43.11/users/sign_in
+        url: https://127.0.0.1/users/sign_in
         method: GET
         status_code: 200
         validate_certs: no
       register: response
       until: response.status == 200
-      retries: 100
+      retries: 200
       delay: 5
       tags:
         - liveliness-check
