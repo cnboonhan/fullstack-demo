@@ -11,7 +11,7 @@ sudo snap install lxd
 ##### OpenTofu
 
 ```
-snap install --classic opentofu
+sudo snap install --classic opentofu
 ```
 
 ### Provisioning
@@ -28,5 +28,5 @@ tofu apply -parallelism=1   # Handle race condition in tofu apply during ssh key
 
 # Note that if you have Docker on your machine, there might networking issues
 # Set the following in /etc/docker/daemon.json
-{ "iptables": false }
+# { "iptables": false }
 ```
