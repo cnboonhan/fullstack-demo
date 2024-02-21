@@ -6,6 +6,8 @@
 
 ```
 sudo snap install lxd
+su $USER # Or re-login
+lxd init # Defaults for everything
 ```
 
 ##### OpenTofu
